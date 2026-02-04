@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card */
+.container {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 30px 20px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+h1 {
+  color: #ff4d6d;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #ff6f91;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+/* Buttons */
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+button {
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+#yesBtn:hover {
+  transform: scale(1.1);
+}
+
+#noBtn {
+  background: #ffd6e0;
+  color: #ff1e56;
+}
+
+/* Hearts */
+.heart {
+  position: fixed;
+  font-size: 22px;
+  animation: floatUp linear forwards;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(110vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Glitter */
+.glitter {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: pink;
+  border-radius: 50%;
+  opacity: 0.9;
+  z-index: 999; /* 🔥 always visible */
+}
+
+.sparkle {
+  animation: sparkle 1.5s infinite ease-in-out;
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0.5); opacity: 0.4; }
+  50% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(0.5); opacity: 0.4; }
+}
+
+/* Falling glitter */
+.fall {
+  animation: fallDown linear forwards;
+}
+
+@keyframes fallDown {
+  from { top: -10px; opacity: 1; }
+  to { top: 110vh; opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Will You Be My Valentine? 💕</h1>
+  <p>You make my heart smile every single day 🌸</p>
+
+  <div class="button-row">
+    <button id="yesBtn" onclick="yesClicked()">YES 💖</button>
+    <button id="noBtn">NO 🙈</button>
+  </div>
+</div>
+
+<script>
+function sendYesEmail() {
+  emailjs.send("service_m5n30rb", "template_83ttki6", {
+    time: new Date().toLocaleString()
+  })
+  .then(() => {
+    console.log("YES email sent successfully 💖");	
+  })
+  .catch((error) => {
+    console.error("Email failed 😢", error);
+  });
+}
+
+const noBtn = document.getElementById("noBtn");
+let escaped = false;
+
+/* NO button escape */
+function escapeNo() {
+  if (!escaped) {
+    escaped = true;
+    noBtn.style.position = "fixed";
+  }
+
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseenter", escapeNo);
+noBtn.addEventListener("mousemove", escapeNo);
+noBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  escapeNo();
+});
+
+/* Hearts (fast & immediate) */
+function createHeart() {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random() * window.innerWidth + "px";
+  h.style.animationDuration = (2 + Math.random() * 2) + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 4000);
+}
+
+for (let i = 0; i < 12; i++) createHeart();
+setInterval(createHeart, 250);
+
+/* Constant glitter */
+function createGlitter() {
+  const g = document.createElement("div");
+  g.className = "glitter sparkle";
+  g.style.left = Math.random() * window.innerWidth + "px";
+  g.style.top = Math.random() * window.innerHeight + "px";
+  document.body.appendChild(g);
+  setTimeout(() => g.remove(), 2000);
+}
+setInterval(createGlitter, 80);
+
+/* YES clicked */
+function yesClicked() {
+sendYesEmail();
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:20px;
+      color:white;
+      font-family:'Comic Sans MS', cursive;
+      overflow:hidden;
+    ">
+      <div>
+        <h1 style="font-size:2.6rem;">YAYYYY 💖💖💖</h1>
+        <p style="font-size:1.3rem;margin-top:20px;">
+          Thank you for choosing me <br>
+After all the long days,<br>
+all the travel, all the tired moments —<br>
+I hope I can be your peace 🌷<br>
+We’ve come a long way together 💖<br>
+I know life gets exhausting sometimes,<br>
+but you never walk alone.<br>
+I’m right here — always 🌸<br>
+I love you 🌸
+        </p>
+      </div>
+    </div>
+  `;
+
+  /* Falling glitter rain */
+  for (let i = 0; i < 200; i++) {
+    const g = document.createElement("div");
+    g.className = "glitter fall";
+    g.style.left = Math.random() * window.innerWidth + "px";
+    g.style.animationDuration = (2 + Math.random() * 3) + "s";
+    document.body.appendChild(g);
+    setTimeout(() => g.remove(), 5000);
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+  emailjs.init("55Qx_02ab5XGG1VQu");
+})();
+</script>
+
+</body>
+</html>
